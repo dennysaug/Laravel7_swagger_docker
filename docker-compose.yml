@@ -1,0 +1,77 @@
+version: '2'
+
+services:
+  web:
+    image: nginx:latest
+    container_name: xcode_web
+    ports:
+      - "80:8000"
+    command: nginx-debug -g 'daemon off;'
+    working_dir: /opt
+    links:
+      - php
+    networks:
+      - develop
+    volumes:
+      - ./public:/opt/public
+      - ./laravel.conf:/etc/nginx/conf.d/laravel.conf
+    depends_on:
+      - php
+  db:
+    image: mysql:5.7.33
+    container_name: xcode_database
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - xcode:/var/lib/mysql
+    networks:
+      - develop
+    environment:
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: 'laravel'
+      #MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'secret'
+      MYSQL_ROOT_PASSWORD: 'root'
+  php:
+    image: php:7.3.4-fpm
+    container_name: xcode_php
+    volumes:
+      - .:/opt
+    working_dir: /opt
+    command: sh install.sh
+    environment:
+      INSTALL_VENDOR: 'y'
+      USER: "$USER"
+    networks:
+      - develop
+    depends_on:
+      - db
+    links:
+      - db
+  node:
+    image: node:12.14.1-stretch
+    container_name: xcode_node
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=dev
+    volumes:
+      - .:/home/node/app:rw
+    expose:
+      - "8081"
+    command: sh install-node.sh
+    networks:
+      - develop
+networks:
+  develop:
+    driver: bridge
+volumes:
+  xcode:
+
+
+
+

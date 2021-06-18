@@ -1,0 +1,6 @@
+UserGroup:
+  name: name
+  in: formData
+  description: name for user group
+  required: true
+  type: string

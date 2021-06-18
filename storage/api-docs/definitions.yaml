@@ -1,0 +1,12 @@
+definitions:
+  User:           # <----------
+    type: object
+    required:
+      - userName
+    properties:
+      userName:
+        type: string
+      firstName:
+        type: string
+      lastName:
+        type: string
