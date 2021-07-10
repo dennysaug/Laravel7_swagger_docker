@@ -82,7 +82,7 @@ class UserGroupController extends Controller
             'description' => 'nullable'
         ]);
 
-        return ['succcess' => (UserGroup::findOrFail($id)->update($data)) ? true : false];
+        return ['success' => (UserGroup::findOrFail($id)->update($data)) ? true : false];
     }
 
     /**
@@ -93,6 +93,6 @@ class UserGroupController extends Controller
      */
     public function destroy($id)
     {
-        return ['succcess' => (UserGroup::findOrFail($id)->delete()) ? true : false ];
+        return ['success' => (UserGroup::findOrFail($id)->delete()) ? true : false ];
     }
 }

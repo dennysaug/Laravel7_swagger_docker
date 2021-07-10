@@ -52,7 +52,7 @@ paths:
                   created_at:
                     type: string
                     format: date-time
-                  update:
+                  update_at:
                     type: string
                     format: date-time
                   deleted_at:
@@ -108,7 +108,7 @@ paths:
                   type: string
       responses:
         '200':
-          description: return boolean succes
+          description: return boolean success
           content:
             application/json:
               schema:
